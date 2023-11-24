@@ -17,8 +17,8 @@ final class CreatePixChargeGateway
         private readonly bool $isSandBox = false,
     ) {
         $baseUrl = $this->isSandBox
-            ? 'https://api.hm.bb.com.br/pix/v1'
-            : 'https://api.bb.com.br/pix/v1';
+            ? 'https://api.hm.bb.com.br'
+            : 'https://api-pix.bb.com.br';
 
         $this->httpClient = new GuzzleClient([
             'base_uri' => $baseUrl,
@@ -29,9 +29,9 @@ final class CreatePixChargeGateway
     public function createCharge(PixData $pixData): CreatePixChargeOutput
     {
         $headers = [
-            "Content-Type: application/json",
-            "Authorization: Bearer {$this->accessToken}",
-            "X-Developer-Application-Key: {$this->devAppId}"
+            "Content-Type" => "application/json",
+            "Authorization" => "Bearer {$this->accessToken}",
+            "X-Application-Key" => $this->devAppId
         ];
 
         $body = [
@@ -46,12 +46,12 @@ final class CreatePixChargeGateway
                 'original' => (string)$pixData->amount
             ],
             'chave' => $pixData->destinationKey,
-            'solicitacaoPagador' => $pixData->description,
+            'solcnpjitacaoPagador' => $pixData->description,
         ];
 
         $txId = md5(substr(md5((string)mt_rand()), 0, 7));
 
-        $response = $this->httpClient->put("/cobqrcode/{$txId}", [
+        $response = $this->httpClient->put("/pix/v2/cob/{$txId}", [
             'headers' => $headers,
             'json' => $body
         ]);
