@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Astrotech\BancoBrasilPix\AuthenticateGateway;
 
-use Astrotech\BancoBrasilPix\Exceptions\BancoBrasilOAuthInvalidRequest;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\ClientException;
 
 final class AuthenticationGateway
 {
@@ -28,20 +28,29 @@ final class AuthenticationGateway
 
     public function authenticate(): AuthenticationOutput
     {
-        $body = http_build_query([
+        $body = [
             'grant_type' => 'client_credentials',
             'scope' => 'cob.read cob.write pix.read pix.write'
-        ]);
-
-        $headers = [
-            "Authorization: Basic " . base64_encode("{$this->clientId}:{$this->clientSecret}"),
-            "Content-Type: application/x-www-form-urlencoded"
         ];
 
-        $response = $this->httpClient->post('/oauth/token', [
-            'headers' => $headers,
-            'form_params' => $body
-        ]);
+        $headers = [
+            "Authorization" => "Basic " . base64_encode("{$this->clientId}:{$this->clientSecret}"),
+            "Content-Type" => "application/x-www-form-urlencoded"
+        ];
+
+        try {
+            $response = $this->httpClient->post('/oauth/token', [
+                'headers' => $headers,
+                'form_params' => $body
+            ]);
+        } catch (ClientException $e) {
+            $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
+            throw new BancoBrasilAuthenticationException(
+                $responsePayload['error'],
+                $responsePayload['error_description'],
+                $responsePayload
+            );
+        }
 
         $responsePayload = json_decode($response->getBody()->getContents(), true);
 
@@ -56,7 +65,7 @@ final class AuthenticationGateway
         if (!isset($responsePayload['access_token'])) {
             throw new BancoBrasilOAuthInvalidRequest(
                 '0000001',
-                'Token de Autenticação BB não foi encontrado',
+                'Token de Autenticação BB não foi informado',
                 $responsePayload
             );
         }

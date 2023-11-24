@@ -27,5 +27,9 @@
     </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <env name="BANCO_BRASIL_SANDBOX" value="1"/>
+        <env name="BANCO_BRASIL_CLIENT_ID" value=""/>
+        <env name="BANCO_BRASIL_CLIENT_SECRET" value=""/>
+        <env name="BANCO_BRASIL_DEV_APP_ID" value=""/>
     </php>
 </phpunit>
