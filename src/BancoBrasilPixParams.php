@@ -1,8 +1,8 @@
 <?php
 
-namespace Astrotech\Shared\Infra\BancoBrasilPixSdk;
+namespace Astrotech\BancoBrasilPix;
 
-final class BbPixParams
+final class BancoBrasilPixParams
 {
     public function __construct(
         public readonly string $pixKey,
