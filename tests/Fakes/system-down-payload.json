@@ -1,0 +1,11 @@
+{
+    "code": "301",
+    "correlationId": "API-BB-65ab5662-c89b-4c1d-b5d1-88fe0d8981cd",
+    "detail": "Aconteceu um problema técnico, tente mais tarde.",
+    "msgCorrelationId": "D6vUNRpjn4ZMeVEP3Amc0101",
+    "numeroOcorrencia": 0,
+    "status": 400,
+    "title": "Bad Request",
+    "type": "https://api.hm.bb.com.br/pix/v2/error/OperacaoInvalida",
+    "userHelp": "Caso ocorra novamente, entre em contato conosco pelo WhatsApp mandando uma mensagem para (61) 4004-0001."
+}

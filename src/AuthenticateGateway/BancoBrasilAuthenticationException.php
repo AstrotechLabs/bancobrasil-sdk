@@ -10,8 +10,9 @@ final class BancoBrasilAuthenticationException extends Exception
     private string $description;
     private ?array $responsePayload;
 
-    public function __construct(string $key, string $description, ?array $responsePayload)
+    public function __construct(int $code, string $key, string $description, ?array $responsePayload)
     {
+        $this->code = $code;
         $this->key = $key;
         $this->description = $description;
         $this->responsePayload = $responsePayload;

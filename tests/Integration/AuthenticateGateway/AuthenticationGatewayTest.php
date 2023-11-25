@@ -6,19 +6,73 @@ namespace Tests\Integration\AuthenticateGateway;
 
 use Astrotech\BancoBrasilPix\AuthenticateGateway\AuthenticationGateway;
 use Astrotech\BancoBrasilPix\AuthenticateGateway\BancoBrasilAuthenticationException;
+use Astrotech\BancoBrasilPix\AuthenticateGateway\BancoBrasilOAuthInvalidRequest;
+use ReflectionClass;
 use Tests\TestCase;
+use Tests\Trait\HttpClientMock;
 
 final class AuthenticationGatewayTest extends TestCase
 {
+    use HttpClientMock;
+
     public function testItShouldThrowUnidentifiedCustomerExceptionWhenInvalidCredentialsIsProvided()
     {
         $this->expectException(BancoBrasilAuthenticationException::class);
-        $this->expectExceptionMessage('[authentication error: invalid_request] - Software cliente não identificado');
+        $this->expectExceptionCode(1001);
 
         $sut = new AuthenticationGateway(
             self::$faker->uuid(),
             self::$faker->uuid(),
             boolval($_ENV['BANCO_BRASIL_SANDBOX'])
+        );
+
+        $reflection = new ReflectionClass($sut);
+        $property = $reflection->getProperty('httpClient');
+        $property->setValue(
+            $sut,
+            $this->getHttpClientMockWithException('post', 'invalid-client-id-or-secret.json')
+        );
+
+        $sut->authenticate();
+    }
+
+    public function testItShouldThrowAnErrorWhenResponseReturnsAnyError()
+    {
+        $this->expectException(BancoBrasilOAuthInvalidRequest::class);
+        $this->expectExceptionCode(1001);
+
+        $sut = new AuthenticationGateway(
+            self::$faker->uuid(),
+            self::$faker->uuid(),
+            boolval($_ENV['BANCO_BRASIL_SANDBOX'])
+        );
+
+        $reflection = new ReflectionClass($sut);
+        $property = $reflection->getProperty('httpClient');
+        $property->setValue(
+            $sut,
+            $this->getHttpClientMock('post', 'invalid-client-id-or-secret.json')
+        );
+
+        $sut->authenticate();
+    }
+
+    public function testItShouldThrowAnErrorWhenResponseDoesNotReturnAccessTokenKey()
+    {
+        $this->expectException(BancoBrasilOAuthInvalidRequest::class);
+        $this->expectExceptionCode(1002);
+
+        $sut = new AuthenticationGateway(
+            self::$faker->uuid(),
+            self::$faker->uuid(),
+            boolval($_ENV['BANCO_BRASIL_SANDBOX'])
+        );
+
+        $reflection = new ReflectionClass($sut);
+        $property = $reflection->getProperty('httpClient');
+        $property->setValue(
+            $sut,
+            $this->getHttpClientMock('post', 'authentication-payload-without-token.json')
         );
 
         $sut->authenticate();
@@ -27,9 +81,16 @@ final class AuthenticationGatewayTest extends TestCase
     public function testItShouldReturnAccessTokenWhenValidDataIsProvided()
     {
         $sut = new AuthenticationGateway(
-            $_ENV['BANCO_BRASIL_CLIENT_ID'],
-            $_ENV['BANCO_BRASIL_CLIENT_SECRET'],
+            self::$faker->uuid(),
+            self::$faker->uuid(),
             boolval($_ENV['BANCO_BRASIL_SANDBOX'])
+        );
+
+        $reflection = new ReflectionClass($sut);
+        $property = $reflection->getProperty('httpClient');
+        $property->setValue(
+            $sut,
+            $this->getHttpClientMock('post', 'valid-authentication-payload.json')
         );
 
         $result = $sut->authenticate();

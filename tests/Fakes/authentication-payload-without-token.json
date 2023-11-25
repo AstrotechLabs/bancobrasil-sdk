@@ -1,0 +1,5 @@
+{
+    "token_type":"Bearer",
+    "expires_in":600,
+    "scope":"pix.read pix.write cob.write cob.read"
+}

@@ -7,7 +7,7 @@ namespace Astrotech\BancoBrasilPix\AuthenticateGateway;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
 
-final class AuthenticationGateway
+class AuthenticationGateway
 {
     private GuzzleClient $httpClient;
 
@@ -46,6 +46,7 @@ final class AuthenticationGateway
         } catch (ClientException $e) {
             $responsePayload = json_decode($e->getResponse()->getBody()->getContents(), true);
             throw new BancoBrasilAuthenticationException(
+                1001,
                 $responsePayload['error'],
                 $responsePayload['error_description'],
                 $responsePayload
@@ -56,6 +57,7 @@ final class AuthenticationGateway
 
         if (isset($responsePayload['error'])) {
             throw new BancoBrasilOAuthInvalidRequest(
+                1001,
                 $responsePayload['error'],
                 $responsePayload['error_description'],
                 $responsePayload
@@ -64,7 +66,8 @@ final class AuthenticationGateway
 
         if (!isset($responsePayload['access_token'])) {
             throw new BancoBrasilOAuthInvalidRequest(
-                '0000001',
+                1002,
+                'access_token_not_found',
                 'Token de Autenticação BB não foi informado',
                 $responsePayload
             );
