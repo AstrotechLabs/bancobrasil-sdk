@@ -1,0 +1,12 @@
+{
+    "type": "https://pix.bcb.gov.br/api/v2/error/CobOperacaoInvalida",
+    "title": "Cobrança inválida.",
+    "status": 400,
+    "detail": "A requisição que busca alterar ou criar uma cobrança para pagamento imediato não respeita o schema ou está semanticamente errada.",
+    "violacoes": [
+        {
+            "razao": "O campo cob.valor.original não respeita o schema.",
+            "propriedade": "cob.valor.original"
+        }
+    ]
+}

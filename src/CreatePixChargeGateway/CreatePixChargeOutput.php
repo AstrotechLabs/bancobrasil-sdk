@@ -10,7 +10,7 @@ final class CreatePixChargeOutput implements JsonSerializable
 {
     public function __construct(
         public readonly string $txId,
-        public readonly string $qrCode
+        public readonly string $copyPasteKey
     ) {
     }
 

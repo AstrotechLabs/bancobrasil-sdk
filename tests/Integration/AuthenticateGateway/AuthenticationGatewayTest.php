@@ -43,8 +43,7 @@ final class AuthenticationGatewayTest extends TestCase
 
         $sut = new AuthenticationGateway(
             self::$faker->uuid(),
-            self::$faker->uuid(),
-            boolval($_ENV['BANCO_BRASIL_SANDBOX'])
+            self::$faker->uuid()
         );
 
         $reflection = new ReflectionClass($sut);
