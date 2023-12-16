@@ -15,7 +15,7 @@ $ php composer.phar require vaironaegos/bancobrasil-sdk
 ou adicionar esse linha
 
 ```
-"vaironaegos/bancobrasil-sdk": "^1.0"
+"astrotechlabs/bancobrasil-sdk": "^1.0"
 ```
 
 na seção `require` do seu arquivo `composer.json`.
@@ -26,17 +26,17 @@ na seção `require` do seu arquivo `composer.json`.
 
 ```php
 $bbService = new BancoBrasilPix(new BancoBrasilPixParams(
-    clientId: 'xxxxx',
-    clientSecret: 'yyyyy',
-    devAppId: 'ccccc',
-    // isSandBox: $bbParams['isSandBox'] (opcional)
+    clientId: 'xxxxxxxxx',
+    clientSecret: 'yyyyyyyyyy',
+    devAppId: 'ccccccccc',
+    // isSandBox: true (opicional)
 ));
 
 $pixChargeResponse = $bbService->createCharge(new PixData(
-    senderName: $contract->customer->user->name,
-    senderCpf: $contract->customer->cpf,
-    amount: (float)$contract->amount,
-    destinationKey: $company->bancoBrasilApi['pixKey'],
+    senderName: 'João Silva',
+    senderCpf: 'xxxxxxxxxxx',
+    amount: 100.00,
+    destinationKey: '0000000000', // Chave pix
     // description: 'Compra XPTO' (Opcional)
 ));
 
@@ -46,12 +46,25 @@ print_r($pixChargeResponse);
 Saída
 
 ```
-@todo
+[
+    'txId' => '809d734b0d487097ad0c358d6ca78dd6',
+    'copyPasteKey' => 'pix.example.com/qr/v2/9d36b84fc70b478fb95c12729b90ca25',
+    'responsePayload' => [
+        'txid' => '7978c0c97ea847e78e8849634473c1f1',
+        'calendario' => [
+            'criacao' => '2020-09-09T20:15:00.358Z'
+            'expiracao' => 3600
+        ],
+        'revisao' => 0,
+        ...........
+    ],
+    'qrCode' => 'imagem qrcode...'
+]
 ```
 
 ## Contributing
 
-Pull Request são bem-vindao. Para mudanças importantes, abra primeiro uma issue para discutir o que você gostaria de mudar.
+Pull Request são bem-vindos. Para mudanças importantes, abra primeiro uma issue para discutir o que você gostaria de mudar.
 
 Certifique-se de atualizar os testes conforme apropriado.
 
