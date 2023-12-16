@@ -22,7 +22,32 @@ na seção `require` do seu arquivo `composer.json`.
 
 ## Como Usar?
 
+### Mínimo para usar
+
+```php
+$bbService = new BancoBrasilPix(new BancoBrasilPixParams(
+    clientId: 'xxxxx',
+    clientSecret: 'yyyyy',
+    devAppId: 'ccccc',
+    // isSandBox: $bbParams['isSandBox'] (opcional)
+));
+
+$pixChargeResponse = $bbService->createCharge(new PixData(
+    senderName: $contract->customer->user->name,
+    senderCpf: $contract->customer->cpf,
+    amount: (float)$contract->amount,
+    destinationKey: $company->bancoBrasilApi['pixKey'],
+    // description: 'Compra XPTO' (Opcional)
+));
+
+print_r($pixChargeResponse);
+```
+
+Saída
+
+```
 @todo
+```
 
 ## Contributing
 

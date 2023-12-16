@@ -1,6 +1,6 @@
 <?php
 
-namespace Astrotech\BancoBrasilPix\Exceptions;
+namespace AstrotechLabs\BancoBrasilPix\Exceptions;
 
 use Exception;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Astrotech\BancoBrasilPix\AuthenticateGateway;
+namespace AstrotechLabs\BancoBrasilPix\AuthenticateGateway;
 
 final class AuthenticationOutput
 {

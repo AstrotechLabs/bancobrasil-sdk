@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Astrotech\BancoBrasilPix\CreatePixChargeGateway;
+namespace AstrotechLabs\BancoBrasilPix\CreatePixChargeGateway;
 
 use JsonSerializable;
 
@@ -10,7 +10,8 @@ final class CreatePixChargeOutput implements JsonSerializable
 {
     public function __construct(
         public readonly string $txId,
-        public readonly string $copyPasteKey
+        public readonly string $copyPasteKey,
+        public readonly string $payloadResponse
     ) {
     }
 

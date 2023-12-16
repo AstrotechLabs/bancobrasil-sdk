@@ -1,6 +1,6 @@
 <?php
 
-namespace Astrotech\BancoBrasilPix\CreatePixChargeGateway;
+namespace AstrotechLabs\BancoBrasilPix\CreatePixChargeGateway;
 
 final class PixData
 {

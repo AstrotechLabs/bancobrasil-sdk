@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Integration\AuthenticateGateway;
 
-use Astrotech\BancoBrasilPix\AuthenticateGateway\AuthenticationGateway;
-use Astrotech\BancoBrasilPix\AuthenticateGateway\BancoBrasilAuthenticationException;
-use Astrotech\BancoBrasilPix\AuthenticateGateway\BancoBrasilOAuthInvalidRequest;
+use AstrotechLabs\BancoBrasilPix\AuthenticateGateway\AuthenticationGateway;
+use AstrotechLabs\BancoBrasilPix\AuthenticateGateway\BancoBrasilAuthenticationException;
+use AstrotechLabs\BancoBrasilPix\AuthenticateGateway\BancoBrasilOAuthInvalidRequest;
 use ReflectionClass;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;

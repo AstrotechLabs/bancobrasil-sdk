@@ -1,10 +1,12 @@
 <?php
 
-namespace Astrotech\BancoBrasilPix;
+namespace AstrotechLabs\BancoBrasilPix;
 
-use Astrotech\BancoBrasilPix\AuthenticateGateway\AuthenticationGateway;
-use Astrotech\BancoBrasilPix\CreatePixChargeGateway\CreatePixChargeGateway;
-use Astrotech\BancoBrasilPix\CreatePixChargeGateway\PixData;
+use AstrotechLabs\BancoBrasilPix\AuthenticateGateway\AuthenticationGateway;
+use AstrotechLabs\BancoBrasilPix\CreatePixChargeGateway\CreatePixChargeGateway;
+use AstrotechLabs\BancoBrasilPix\CreatePixChargeGateway\PixData;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 
 final class BancoBrasilPix
 {
@@ -30,6 +32,12 @@ final class BancoBrasilPix
             $this->params->isSandBox
         );
 
-        return $createPixChargeGateway->createCharge($pixData)->toArray();
+        $createCharge = $createPixChargeGateway->createCharge($pixData);
+        $options = new QROptions(['version' => QRCode::VERSION_AUTO, 'imageTransparent' => false]);
+
+        return [
+            ...$createCharge->toArray(),
+            'qrCode' => (new QRCode($options))->render($createCharge->copyPasteKey)
+        ];
     }
 }

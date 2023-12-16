@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Astrotech\BancoBrasilPix\CreatePixChargeGateway;
+namespace AstrotechLabs\BancoBrasilPix\CreatePixChargeGateway;
 
-use Astrotech\BancoBrasilPix\Exceptions\BancoBrasilPixInvalidRequest;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
 
 final class CreatePixChargeGateway
 {
@@ -40,14 +40,14 @@ final class CreatePixChargeGateway
                 'expiracao' => (string)$pixData->expiration
             ],
             'devedor' => [
-                'cpf' => $pixData->senderCpf,
-                'nome' => $pixData->senderName
+                'cpf' => preg_replace("/[^0-9]/", "", $pixData->senderCpf),
+                'nome' => strtoupper(trim($pixData->senderName))
             ],
             'valor' => [
                 'original' => (string)$pixData->amount
             ],
-            'chave' => $pixData->destinationKey,
-            'solcnpjitacaoPagador' => $pixData->description,
+            'chave' => preg_replace("/[^0-9]/", "", $pixData->destinationKey),
+            'solcnpjitacaoPagador' => trim($pixData->description),
         ];
 
         $txId = md5(substr(md5((string)mt_rand()), 0, 7));
@@ -66,10 +66,18 @@ final class CreatePixChargeGateway
                 $body,
                 $responsePayload
             );
+        } catch (ConnectException $e) {
+            throw new CreatePixChargeException(
+                1002,
+                $e->getMessage(),
+                get_class($e),
+                $body,
+                []
+            );
         }
 
         $responsePayload = json_decode($response->getBody()->getContents(), true);
 
-        return new CreatePixChargeOutput($txId, $responsePayload['location']);
+        return new CreatePixChargeOutput($txId, $responsePayload['location'], $responsePayload);
     }
 }

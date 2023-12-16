@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Astrotech\BancoBrasilPix\CreatePixChargeGateway;
+namespace AstrotechLabs\BancoBrasilPix\CreatePixChargeGateway;
 
 use Exception;
 

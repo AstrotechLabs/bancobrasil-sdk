@@ -1,6 +1,6 @@
 <?php
 
-namespace Astrotech\BancoBrasilPix\AuthenticateGateway;
+namespace AstrotechLabs\BancoBrasilPix\AuthenticateGateway;
 
 use Exception;
 

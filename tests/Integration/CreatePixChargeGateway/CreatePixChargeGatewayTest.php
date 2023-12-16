@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Integration\CreatePixChargeGateway;
 
-use Astrotech\BancoBrasilPix\AuthenticateGateway\AuthenticationGateway;
-use Astrotech\BancoBrasilPix\AuthenticateGateway\AuthenticationOutput;
-use Astrotech\BancoBrasilPix\CreatePixChargeGateway\CreatePixChargeException;
-use Astrotech\BancoBrasilPix\CreatePixChargeGateway\CreatePixChargeGateway;
-use Astrotech\BancoBrasilPix\CreatePixChargeGateway\PixData;
+use AstrotechLabs\BancoBrasilPix\AuthenticateGateway\AuthenticationGateway;
+use AstrotechLabs\BancoBrasilPix\AuthenticateGateway\AuthenticationOutput;
+use AstrotechLabs\BancoBrasilPix\CreatePixChargeGateway\CreatePixChargeException;
+use AstrotechLabs\BancoBrasilPix\CreatePixChargeGateway\CreatePixChargeGateway;
+use AstrotechLabs\BancoBrasilPix\CreatePixChargeGateway\PixData;
 use ReflectionClass;
 use Tests\TestCase;
 use Tests\Trait\HttpClientMock;

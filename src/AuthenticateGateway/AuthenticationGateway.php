@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Astrotech\BancoBrasilPix\AuthenticateGateway;
+namespace AstrotechLabs\BancoBrasilPix\AuthenticateGateway;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
