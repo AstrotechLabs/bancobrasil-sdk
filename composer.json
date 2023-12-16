@@ -1,6 +1,6 @@
 {
-    "name": "astrotechlabs/bancobrasil-pix",
-    "description": "",
+    "name": "astrotechlabs/bancobrasil-sdk",
+    "description": "Biblioteca para facilitar integração com serviços e API's do Banco do Brasil",
     "type": "project",
     "license": "BSD-3-Clause",
     "minimum-stability": "stable",
